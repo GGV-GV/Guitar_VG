@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Модерация</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Модерация</h1>
+  <nav>
+    <a href="/">Главная</a> |
+    <a href="/moderate">Модерация</a> |
+    <a href="/from-users">Фотки от подписчиков</a>
+  </nav>
+
+  <div class="gallery">
+    {% for file in files %}
+      {% if file.endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+        <div class="item">
+          <img src="{{ url_for('static', filename='uploads/pending/' + file) }}">
+          <a href="{{ url_for('approve', filename=file) }}">✅ Принять</a>
+          <a href="{{ url_for('reject', filename=file) }}">❌ Отклонить</a>
+        </div>
+      {% elif file.endswith(('.mp4', '.mov')) %}
+        <div class="item">
+          <video controls>
+            <source src="{{ url_for('static', filename='uploads/pending/' + file) }}">
+          </video>
+          <a href="{{ url_for('approve', filename=file) }}">✅ Принять</a>
+          <a href="{{ url_for('reject', filename=file) }}">❌ Отклонить</a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</body>
+</html>

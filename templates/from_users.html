@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Фотки от подписчиков</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>📸 Фотки от подписчиков</h1>
+  <nav>
+    <a href="/">Главная</a> |
+    <a href="/moderate">Модерация</a> |
+    <a href="/from-users">Фотки от подписчиков</a>
+  </nav>
+
+  <div class="gallery">
+    {% for file in files %}
+      {% if file.endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+        <img src="{{ url_for('uploaded_file', filename=file) }}">
+      {% elif file.endswith(('.mp4', '.mov')) %}
+        <video controls>
+          <source src="{{ url_for('uploaded_file', filename=file) }}">
+        </video>
+      {% endif %}
+    {% endfor %}
+  </div>
+</body>
+</html>
